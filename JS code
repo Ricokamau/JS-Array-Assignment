@@ -1,0 +1,68 @@
+function getUserInputArray() {
+    const arr = [];
+    let input;
+    while (true) {
+        input = prompt("Enter any number (press Cancel to finish):");
+        if (input === null) {
+            break;
+        }
+        const num = Number(input);
+        if (!isNaN(num)) {
+            arr.push(num);
+        } else {
+            alert("Invalid input.");
+        }
+    }
+    return arr;
+}
+
+
+function findIndexes(arr, num) {
+    const indexes = [];
+    arr.forEach((element, index) => {
+        if (element === num) {
+            indexes.push(index);
+        }
+    });
+    return indexes;
+}
+
+
+function quicksort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    const pivot = arr[arr.length - 1];
+    const left = [];
+    const right = [];
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] < pivot) {
+            left.push(arr[i]);
+        } else {
+            right.push(arr[i]);
+        }
+    }
+    return [...quicksort(left), pivot, ...quicksort(right)];
+}
+
+
+function main() {
+    const arr = getUserInputArray();
+    if (arr.length === 0) {
+        alert("No numbers entered.");
+        return;
+    }
+
+    const target = Number(prompt("Enter your Target Number:"));
+    const indexes = findIndexes(arr, target);
+    if (indexes.length > 0) {
+        alert(`The number ${target} is found at index(es): ${indexes.join(", ")}`);
+    } else {
+        alert(`Number ${target}  not found in the array.`);
+    }
+
+    const sortedArray = quicksort(arr);
+    alert("Sorted array: " + sortedArray.join(", "));
+}
+
+main();
